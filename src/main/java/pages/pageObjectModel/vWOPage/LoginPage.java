@@ -1,14 +1,18 @@
 package pages.pageObjectModel.vWOPage;
 
+import base.CommonToAllPages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.PropertiesReader;
 
+import java.io.IOException;
+import java.net.URL;
 import java.time.Duration;
 
-public class LoginPage {
+public class LoginPage extends CommonToAllPages {
 
     WebDriver driver;
     WebDriverWait wait;
@@ -24,24 +28,22 @@ public class LoginPage {
     private By Sign_Button = By.id("js-login-btn");
     private By errorText = By.id("js-notification-box-msg");
 
-    public String loginVwoInvalidWay(String user, String pass) {
-        driver.get("https://app.vwo.com/#/login");
-        driver.manage().window().maximize();
-        driver.findElement(username).sendKeys(user);
-        driver.findElement(password).sendKeys(pass);
-        driver.findElement(Sign_Button).click();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5000));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(errorText));
-        String errorMsg = driver.findElement(errorText).getText();
+    public String loginVwoInvalidWay(String user, String pass) throws IOException {
+        getUrl("URL");
+        enterElement(username, user);
+        enterElement(password, pass);
+        clickElement(Sign_Button);
+        visibiltyOfElement(errorText);
+        String errorMsg = getText(errorText);
         System.out.println(errorMsg);
         return errorMsg;
     }
-    public void loginVwoValidWay(String user, String pass) {
-        driver.get("https://app.vwo.com/#/login");
-        driver.manage().window().maximize();
-        driver.findElement(username).sendKeys(user);
-        driver.findElement(password).sendKeys(pass);
-        driver.findElement(Sign_Button).click();
+
+    public void loginVwoValidWay(String user, String pass) throws IOException {
+        getUrl("URL");
+        enterElement(username,user);
+        enterElement(password,pass);
+        clickElement(Sign_Button);
 
     }
 
